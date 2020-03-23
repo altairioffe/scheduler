@@ -1,4 +1,4 @@
-export default function getAppointmentsForDay(state, day) {
+const getAppointmentsForDay = function(state, day) {
   let appointments = [];
   const filteredDay = state.days.filter(obj => obj.name === day);
 
@@ -11,4 +11,20 @@ export default function getAppointmentsForDay(state, day) {
     }
   }
   return appointments;
-};
+}
+
+const getInterview = function(state, interviewer) {
+  let returnObj = {};
+  if (!interviewer) {
+    return null;
+  }
+  for (let key in state.appointments) {
+    if (state.appointments[key].interview) {
+      returnObj["student"] = state.appointments[key].interview.student;
+      returnObj["interviewer"] = state.interviewers[interviewer.interviewer];
+    }
+  }
+  return returnObj;
+}
+
+module.exports = { getAppointmentsForDay, getInterview};
