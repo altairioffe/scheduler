@@ -3,7 +3,7 @@ import "components/Appointment/styles.scss";
 import Header from "components/Appointment/Header";
 import Show from "components/Appointment/Show";
 import Empty from "components/Appointment/Empty";
-
+import useVisualMode from "/src/hooks/useVisualMode";
 
 export default function Appointment(props) {
   return <article className="appointment">
