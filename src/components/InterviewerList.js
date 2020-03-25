@@ -10,8 +10,8 @@ const interviewersArr = props.interviewers.map(interviewer => {
   key={interviewer.id}
   name={interviewer.name} 
   avatar={interviewer.avatar} 
-  selected={interviewer.id === props.value}
-  setInterviewer={event => props.onChange(interviewer.id)}
+  selected={interviewer === props.value}
+  setInterviewer={event => props.onChange(interviewer)}
   />
 
 })
@@ -23,4 +23,4 @@ return (
 </section>
 
   );
-}
+} 

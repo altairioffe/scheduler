@@ -4,7 +4,7 @@ import InterviewerList from "./InterviewerList";
 import "components/Application.scss";
 import Appointment from "components/Appointment";
 import axios from "axios";
-import getAppointmentsForDay from "../helpers/selectors"
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "../helpers/selectors"
 
 
 
@@ -29,16 +29,44 @@ export default function Application(props) {
   }, []);
 
   const appointments = getAppointmentsForDay(state, state.day)
+  const interviewers = getInterviewersForDay(state, state.day)
 
   const schedule = appointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
-  
+
+  function bookInterview(id, interview) {
+    //console.log("THIS FROM BOOK INTERVIEW!!!")
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    setState({...state, appointments})
+  }
+
+  function save(name, interviewer) {
+    console.log('ApplicationJS FROM ONNSAVVEEEE name, interviewer', name, interviewer)
+    const interview = {
+      student: name,
+      interviewer: interviewer.id
+    };
+    console.log('NEW INTERVIEW OBJ: ', interview)
+    bookInterview(appointment.id, interview)
+    console.log('FROM BOOOK INTERVIEWW, id: ', appointment.id, ' interview: ', interview);
+  }
+  console.log('application js ', appointment.id, interview)
     return (
       <Appointment
         key={appointment.id}
         id={appointment.id}
         time={appointment.time}
         interview={interview}
+        interviewers={interviewers}
+        bookInterview={bookInterview}
+        onSave={save}
       />
     );
   });
