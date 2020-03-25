@@ -30,7 +30,7 @@ const getInterviewersForDay = function(state, day) {
 }
 
 const getInterview = function(state, interview) {
-  console.log('getInterview', interview)
+ // console.log('getInterview', interview)
   if (!interview) {
     return null;
   }
