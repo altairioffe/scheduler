@@ -6,6 +6,9 @@ export default function Show (props) {
   const onDelete = function() {
     props.onDelete()
   }
+  const onEdit = function() {
+    props.onEdit()
+  }
 
 
 
@@ -24,7 +27,7 @@ export default function Show (props) {
         className="appointment__actions-button"
         src="images/edit.png"
         alt="Edit"
-        onClick={() => props.onEdit()}
+        onClick={onEdit}
       />
       <img
         className="appointment__actions-button"

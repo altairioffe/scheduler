@@ -16,6 +16,9 @@ export default function Appointment(props) {
   const CREATE = "CREATE";
   const SAVING = "SAVING";
   const CONFIRM = "CONFIRM";
+  const DELETING = "DELETING";
+  const EDIT = "EDIT";
+  const ERROR = "ERROR"
 
   const { mode, transition, back } = useVisualMode(EMPTY);
 
@@ -38,6 +41,7 @@ export default function Appointment(props) {
             console.log("OnDelete Props: ", props.id);
             transition(CONFIRM);
           }}
+          onEdit={() => transition(EDIT)}
         />
       )}
       {mode === CREATE && (
@@ -51,11 +55,28 @@ export default function Appointment(props) {
           onCancel={back}
         />
       )}
+      {mode === EDIT && (
+        <Form
+          interviewers={props.interviewers}
+          name={props.interview.student}
+          interviewer={props.interview.interviewer}
+          onSave={(studentName, interviewer) => {
+            //    console.log('Index.js PROPS: ', studentName, interviewer);
+            props.onSave(studentName, interviewer);
+            transition(SAVING);
+          }}
+          onCancel={back}
+        />
+      )}
       {mode === SAVING && <Status message="Savin it" />}
+      {mode === DELETING && <Status message="going..going...GONE!" />}
       {mode === CONFIRM && (
         <Confirm
-          onConfirm={() => props.onDelete(props.id)}
-          onCancel={() => transition(SHOW)}
+          onConfirm={() => {
+            transition(DELETING);
+            props.onDelete(props.id);
+          }}
+          onCancel={back}
           message="You want delit??!"
         />
       )}
