@@ -47,17 +47,16 @@ export default function Application(props) {
     .then(() => setState({...state, appointments}))
   }
 
-  function save(name, interviewer) {
-    const interview = {
-      student: name,
-      interviewer: interviewer.id
-    };
+  // function save(name, interviewer) {
+  //   const interview = {
+  //     student: name,
+  //     interviewer: interviewer.id
+  //   };
     
-    //console.log('NEW INTERVIEW OBJ: ', interview)
-    bookInterview(appointment.id, interview)
-  }
+  //   bookInterview(appointment.id, interview)
+  // }
 
-  function deleteApp(id) {
+  function deleteHandler(id) {
     console.log('clicked')
     const interview = null
 
@@ -70,10 +69,10 @@ export default function Application(props) {
       [id]: appointment
     };
 
-    axios.delete(`http://localhost:8001/api/appointments/${id}`,  { interview: interview })
+   return axios.delete(`http://localhost:8001/api/appointments/${id}`,  { interview: interview })
     .then((res) => console.log("success: ", res))
     .then(setState({...state, appointments}))
-    .catch(err => console.log("ERROR CATCHED: ", err))
+   // .catch(err => console.log("ERROR CATCHED: ", err))
 
   }
 
@@ -86,8 +85,8 @@ export default function Application(props) {
         interview={interview}
         interviewers={interviewers}
         bookInterview={bookInterview}
-        onSave={save}
-        onDelete={deleteApp}
+       // onSave={save}
+        deleteHandler={deleteHandler}
         bookInterview={bookInterview}
       />
     );

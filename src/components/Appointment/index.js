@@ -24,7 +24,8 @@ export default function Appointment(props) {
 
   const { mode, transition, back } = useVisualMode(EMPTY);
 
-  const bookInterview = props.bookInterview
+  const bookInterview = props.bookInterview;
+  const deleteHandler = props.deleteHandler;
 
   function save(name, interviewer) {
     const interview = {
@@ -32,18 +33,25 @@ export default function Appointment(props) {
       interviewer: interviewer.id
     };
     bookInterview(props.id, interview)
-    .then(transition(SHOW));
+    .then(() => transition(SHOW))
+    .catch(error => transition(ERROR_SAVE, true));
 
   }
 
+  function confirmDelete(id) {
+    transition(DELETING)
+    deleteHandler(id)
+    .then(() => transition(EMPTY))
+    .catch(error => transition(ERROR_DELETE, true));
 
+  }
 
 
   useEffect(() => {
     if (props.interview && mode !== "EDIT") {
       //  console.log('USE EFFECT index.js', props.interview, mode)
       transition(SHOW);
-    } else transition(EMPTY);
+    } //else transition(EMPTY);
   }, [props.interview]);
   //console.log('index.js PROPS ', props, mode)
 
@@ -96,8 +104,8 @@ export default function Appointment(props) {
       {mode === CONFIRM && (
         <Confirm
           onConfirm={() => {
-            transition(DELETING, true);
-            props.onDelete(props.id);
+           // transition(DELETING);
+            confirmDelete(props.id);
           }}
           onCancel={back}
           message="You want delit??!"
@@ -105,6 +113,8 @@ export default function Appointment(props) {
       )}
 
       {mode === DELETING && <Status message="going..going...GONE!" />}
+      {mode === ERROR_SAVE && <Error onClose={back} message="COULD NOT SAVE!" />}
+      {mode === ERROR_DELETE && <Error onClose={back} message="COULD NOT DELIT!" />}
     </article>
   );
 }
