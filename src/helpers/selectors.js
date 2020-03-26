@@ -10,6 +10,7 @@ const getAppointmentsForDay = function(state, day) {
       }
     }
   }
+  
   return appointments;
 }
 

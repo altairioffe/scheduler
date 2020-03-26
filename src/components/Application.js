@@ -36,7 +36,7 @@ export default function Application(props) {
       />
     );
   });
-  schedule.push(<Appointment key="last" time="5pm" />)
+
 
   return (
     <main className="layout">
@@ -56,7 +56,7 @@ export default function Application(props) {
           alt="Lighthouse Labs"
         />
       </section>
-      <section className="schedule">{schedule}</section>
+      <section className="schedule">{schedule}<Appointment key="last" time={state.day && "5pm" || null} /></section>
     </main>
   );
 }
