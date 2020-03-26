@@ -56,17 +56,25 @@ export default function Application(props) {
     bookInterview(appointment.id, interview)
   }
 
-   
 
   function deleteApp(id) {
     console.log('clicked')
     const interview = null
 
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
     axios.delete(`http://localhost:8001/api/appointments/${id}`,  { interview: interview })
-    .then((res) => console.log("success: ", res))//setState({...state, appointments}))
+    .then((res) => console.log("success: ", res))
+    .then(setState({...state, appointments}))
     .catch(err => console.log("ERROR CATCHED: ", err))
 
-  
   }
 
 
