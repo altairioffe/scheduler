@@ -13,8 +13,6 @@ const getAppointmentsForDay = function(state, day) {
   return appointments;
 }
 
-// replace push with map
-// useState to set State ?
 const getInterviewersForDay = function(state, day) {
   let interviewers = [];
   const filteredDay = state.days.filter(obj => obj.name === day);

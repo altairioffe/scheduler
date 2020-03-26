@@ -10,6 +10,8 @@ export default function useApplicationData(props) {
     interviewers: {}
   });
 
+  console.log("APPOINTEMENTOSS ", state.appointments )
+  
   const setDay = day => setState({ ...state, day });
 
   useEffect(() => {

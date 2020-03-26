@@ -46,7 +46,6 @@ export default function Appointment(props) {
 
   }
 
-
   useEffect(() => {
     if (props.interview && mode !== "EDIT") {
       //  console.log('USE EFFECT index.js', props.interview, mode)
