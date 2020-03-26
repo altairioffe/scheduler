@@ -7,7 +7,6 @@ import axios from "axios";
 import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "../helpers/selectors"
 
 
-
 export default function Application(props) {
   const [state, setState] = useState({
     day: "Monday",
@@ -35,7 +34,6 @@ export default function Application(props) {
     const interview = getInterview(state, appointment.interview);
 
   function bookInterview(id, interview) {
-    //console.log("THIS FROM BOOK INTERVIEW!!!")
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -44,14 +42,12 @@ export default function Application(props) {
       ...state.appointments,
       [id]: appointment
     };
-    console.log('FROM BOOOK INTERVIEWW, id: ', id, ' interview: ', interview);
-
+    // console.log('FROM BOOOK INTERVIEWW, id: ', id, ' interview: ', interview);
     axios.put(`http://localhost:8001/api/appointments/${id}`,  { interview: interview })
     .then(() => setState({...state, appointments}))
   }
 
   function save(name, interviewer) {
-  //  console.log('ApplicationJS FROM ONNSAVVEEEE name, interviewer', name, interviewer)
     const interview = {
       student: name,
       interviewer: interviewer.id
@@ -59,6 +55,22 @@ export default function Application(props) {
   //  console.log('NEW INTERVIEW OBJ: ', interview)
     bookInterview(appointment.id, interview)
   }
+
+   
+
+  function deleteApp(id) {
+    console.log('clicked')
+    const interview = null
+
+    axios.delete(`http://localhost:8001/api/appointments/${id}`,  { interview: interview })
+    .then((res) => console.log("success: ", res))//setState({...state, appointments}))
+    .catch(err => console.log("ERROR CATCHED: ", err))
+
+  
+  }
+
+
+
   console.log('application js ', appointment.id, interview)
     return (
       <Appointment
@@ -69,6 +81,7 @@ export default function Application(props) {
         interviewers={interviewers}
         bookInterview={bookInterview}
         onSave={save}
+        onDelete={deleteApp}
       />
     );
   });

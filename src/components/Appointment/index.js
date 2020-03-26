@@ -15,8 +15,6 @@ export default function Appointment(props) {
   const CREATE = "CREATE"
   const SAVING = "SAVING"
   
-  
-
   const { mode, transition, back } = useVisualMode(EMPTY)
   
   useEffect(() => {
@@ -35,6 +33,10 @@ export default function Appointment(props) {
         <Show
           student={props.interview.student}
           interviewer={props.interview.interviewer}
+          onDelete={() => {
+
+          console.log("OnDelete Props: ", props.id); 
+          props.onDelete(props.id)}}
         />
       )}
       {mode === CREATE && (
