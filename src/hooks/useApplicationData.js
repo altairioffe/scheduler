@@ -48,23 +48,6 @@ export default function useApplicationData(props) {
   })
 
   
-    // for (let key of state.days) {
-    
-    //   if x
-   // let spotsAvailable = 5;
-    // const dayItem = key;
-    //   for (let id of dayItem.appointments) {
-        
-    //     console.log("DAY's SPOTS: ", state.days[id])
-    //     if (state.appointments[id].interview) {
-          //console.log("From dayItemZ LOG: ", state.appointments[id].interview)
-        //  spotsAvailable--
-         // console.log("spots Available: ", spotsAvailable)
-      //   }
-      // }
-   //  dayItem.spots = spotsAvailable
-
-  //};
 
   function bookInterview(id, interview) {
     const appointment = {
@@ -94,6 +77,14 @@ export default function useApplicationData(props) {
       ...state.appointments,
       [id]: appointment
     };
+
+    state.days.forEach(day => {
+
+      if (day.appointments.includes(id)) {
+        day.spots += 1;
+        console.log("THE DAY IS HERE: ", day.spots)
+      }
+    })
 
     return axios
       .delete(`http://localhost:8001/api/appointments/${id}`, {
