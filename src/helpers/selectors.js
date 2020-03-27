@@ -10,9 +10,8 @@ const getAppointmentsForDay = function(state, day) {
       }
     }
   }
-  
   return appointments;
-}
+};
 
 const getInterviewersForDay = function(state, day) {
   let interviewers = [];
@@ -26,10 +25,10 @@ const getInterviewersForDay = function(state, day) {
     }
   }
   return interviewers;
-}
+};
 
 const getInterview = function(state, interview) {
- // console.log('getInterview', interview)
+  // console.log('getInterview', interview)
   if (!interview) {
     return null;
   }
@@ -38,11 +37,10 @@ const getInterview = function(state, interview) {
       return {
         student: interview.student,
         interviewer: state.interviewers[key]
-
-      }
+      };
     }
   }
   return null;
-}
+};
 
 module.exports = { getAppointmentsForDay, getInterview, getInterviewersForDay };

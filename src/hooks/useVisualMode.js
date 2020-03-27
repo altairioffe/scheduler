@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 
+//Sets display mode for appointment slots
 export default function useVisualMode(initial) {
   const [history, setHistory] = useState([initial]);
   const [mode, setMode] = useState(initial);
 
   const transition = function(mode, replace = false) {
-
-    setMode(mode); 
-    if (replace ===false) {
-    setHistory(prevHistory => [...prevHistory, mode]);
+    setMode(mode);
+    if (replace === false) {
+      setHistory(prevHistory => [...prevHistory, mode]);
     }
-  }; 
+  };
 
   const back = function() {
     if (history.length === 1) {

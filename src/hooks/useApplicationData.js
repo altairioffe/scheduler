@@ -9,10 +9,9 @@ export default function useApplicationData(props) {
     interviewers: {}
   });
 
-  //console.log("APPOINTEMENTOSS ", state.appointments);
-
   const setDay = day => setState({ ...state, day });
 
+  // Make requests to database for appointment data & set state:
   useEffect(() => {
     Promise.all([
       Promise.resolve(axios.get("http://localhost:8001/api/days")),
@@ -27,32 +26,28 @@ export default function useApplicationData(props) {
     });
   }, []);
 
-  console.log("HIT!!");
+  // RESET spots available after save
+  const resetSpots = function() {
+    const newDaysArr = [];
 
-
-  const resetSpots = function(){
-  const newDaysArr = [];
-
-  state.days.forEach(day => {
-    let spotsAvailable = 5;
-    //console.log("ForEACH SPOTS: ", day.spots)
-    day.appointments.forEach(app => {
-      if (state.appointments[app].interview) {
-        spotsAvailable--;
-      }
+    state.days.forEach(day => {
+      let spotsAvailable = 5;
+      day.appointments.forEach(app => {
+        if (state.appointments[app].interview) {
+          spotsAvailable--;
+        }
+      });
+      day["spots"] = spotsAvailable;
+      newDaysArr.push(day);
     });
-    day["spots"] = spotsAvailable;
-    newDaysArr.push(day);
-  });
 
-  console.log("newDaysArr: ", newDaysArr);
-  return newDaysArr;
+    console.log("newDaysArr: ", newDaysArr);
+    return newDaysArr;
+  };
 
-}
+  resetSpots();
 
-resetSpots()
-
-
+  //Handles saving / updating appontment
   function bookInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
@@ -62,7 +57,6 @@ resetSpots()
       ...state.appointments,
       [id]: appointment
     };
-    //console.log('FROM BOOOK INTERVIEWW, id: ', id, ' interview: ', interview);
     return axios
       .put(`http://localhost:8001/api/appointments/${id}`, {
         interview: interview
@@ -70,15 +64,9 @@ resetSpots()
       .then(() => setState({ ...state, appointments }));
   }
 
+
+  //Handles appointmnent deletion
   function deleteHandler(id) {
-
-    // state.days.forEach(day => {
-    //   if (day.appointments.includes(id)) {
-    //     day.spots++;
-    //     console.log("THE DAY IS HERE: ", day.spots);
-    //   }
-    // });
-
     const interview = null;
 
     const appointment = {
@@ -89,15 +77,13 @@ resetSpots()
       ...state.appointments,
       [id]: appointment
     };
-
     return axios
       .delete(`http://localhost:8001/api/appointments/${id}`, {
         interview: interview
       })
       .then(res => console.log("success: ", res))
       .then(setState({ ...state, appointments }))
-      .then(() => resetSpots())
-    // .catch(err => console.log("ERROR CATCHED: ", err))
+      .then(() => resetSpots());
   }
 
   return { state, setDay, bookInterview, deleteHandler };

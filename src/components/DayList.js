@@ -1,10 +1,9 @@
-import React, {useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import DayListItem from "./DayListItem";
-import useApplicationData from "./../hooks/useApplicationData"
-
+import useApplicationData from "./../hooks/useApplicationData";
 
 export default function DayList(props) {
-  console.log("RENDERING DAYLIST")
+  console.log("RENDERING DAYLIST");
   const arr = props.days.map(data => {
     return (
       <DayListItem

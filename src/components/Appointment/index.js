@@ -27,47 +27,40 @@ export default function Appointment(props) {
   const bookInterview = props.bookInterview;
   const deleteHandler = props.deleteHandler;
 
-
-  
   function save(name, interviewer) {
     const interview = {
       student: name,
       interviewer: interviewer.id
     };
     bookInterview(props.id, interview)
-    .then(() => transition(SHOW))
-    .catch(error => transition(ERROR_SAVE, true));
-
+      .then(() => transition(SHOW))
+      .catch(error => transition(ERROR_SAVE, true));
   }
 
   function confirmDelete(id) {
-    transition(DELETING)
-     deleteHandler(id)
-    .then(() => transition(EMPTY))
-    .catch(error => transition(ERROR_DELETE, true));
-
+    transition(DELETING);
+    deleteHandler(id)
+      .then(() => transition(EMPTY))
+      .catch(error => transition(ERROR_DELETE, true));
   }
 
   useEffect(() => {
     if (props.interview && mode !== "EDIT") {
-      //  console.log('USE EFFECT index.js', props.interview, mode)
       transition(SHOW);
-    } //else transition(EMPTY);
+    }
   }, [props.interview]);
-  //console.log('index.js PROPS ', props, mode)
 
   return (
     <article className="appointment" data-testid="appointment">
       <Header time={props.time} />
-      
+
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
-      
+
       {mode === SHOW && (
         <Show
           student={props.interview.student}
           interviewer={props.interview.interviewer}
           onDelete={() => {
-           // console.log("OnDelete Props: ", props.id);
             transition(CONFIRM);
           }}
           onEdit={() => transition(EDIT)}
@@ -78,7 +71,6 @@ export default function Appointment(props) {
         <Form
           interviewers={props.interviewers}
           onSave={(studentName, interviewer) => {
-            //console.log('Index.js PROPS: ', studentName, interviewer);
             save(studentName, interviewer);
             transition(SAVING);
           }}
@@ -92,7 +84,6 @@ export default function Appointment(props) {
           name={props.interview.student}
           interviewer={props.interview.interviewer}
           onSave={(studentName, interviewer) => {
-            //    console.log('Index.js PROPS: ', studentName, interviewer);
             save(studentName, interviewer);
             transition(SAVING);
           }}
@@ -105,7 +96,6 @@ export default function Appointment(props) {
       {mode === CONFIRM && (
         <Confirm
           onConfirm={() => {
-           // transition(DELETING);
             confirmDelete(props.id);
           }}
           onCancel={back}
@@ -114,8 +104,12 @@ export default function Appointment(props) {
       )}
 
       {mode === DELETING && <Status message="going..going...GONE!" />}
-      {mode === ERROR_SAVE && <Error onClose={back} message="COULD NOT SAVE!" />}
-      {mode === ERROR_DELETE && <Error onClose={back} message="COULD NOT DELIT!" />}
+      {mode === ERROR_SAVE && (
+        <Error onClose={back} message="COULD NOT SAVE!" />
+      )}
+      {mode === ERROR_DELETE && (
+        <Error onClose={back} message="COULD NOT DELIT!" />
+      )}
     </article>
   );
 }
