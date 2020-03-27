@@ -1,6 +1,6 @@
 # Interview Scheduler
 
-Interview scheduler is a React application that allows users to book and canel interviews.
+Interview scheduler is a React application that allows users to book and cancel interviews.
 
 ![](public/images/scheduler_screenshot.png)
 
