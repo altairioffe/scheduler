@@ -1,5 +1,19 @@
 # Interview Scheduler
 
+Interview scheduler is a React application that allows users to book and canel interviews.
+
+![](public/images/scheduler_screenshot.png)
+
+## Dependencies
+
+- Axios
+- Classnames
+- Normalize.css
+- React
+- React-DOM
+- React-hooks-testing-library
+- React-scripts
+
 ## Setup
 
 Install dependencies with `npm install`.
