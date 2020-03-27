@@ -25,29 +25,33 @@ export default function useApplicationData(props) {
         interviewers: all[2].data
       }));
     });
-  }, [])
-  
+  }, []);
 
+  console.log("HIT!!");
+
+
+  const resetSpots = function(){
+  const newDaysArr = [];
 
   state.days.forEach(day => {
-    
     let spotsAvailable = 5;
-
-    console.log("ForEACH SPOTS: ", day.spots)
-    
+    //console.log("ForEACH SPOTS: ", day.spots)
     day.appointments.forEach(app => {
-
       if (state.appointments[app].interview) {
-        spotsAvailable --
+        spotsAvailable--;
       }
+    });
+    day["spots"] = spotsAvailable;
+    newDaysArr.push(day);
+  });
 
+  console.log("newDaysArr: ", newDaysArr);
+  return newDaysArr;
 
-    })
+}
 
-    day.spots = spotsAvailable
-  })
+resetSpots()
 
-  
 
   function bookInterview(id, interview) {
     const appointment = {
@@ -67,6 +71,14 @@ export default function useApplicationData(props) {
   }
 
   function deleteHandler(id) {
+
+    // state.days.forEach(day => {
+    //   if (day.appointments.includes(id)) {
+    //     day.spots++;
+    //     console.log("THE DAY IS HERE: ", day.spots);
+    //   }
+    // });
+
     const interview = null;
 
     const appointment = {
@@ -78,20 +90,13 @@ export default function useApplicationData(props) {
       [id]: appointment
     };
 
-    state.days.forEach(day => {
-
-      if (day.appointments.includes(id)) {
-        day.spots += 1;
-        console.log("THE DAY IS HERE: ", day.spots)
-      }
-    })
-
     return axios
       .delete(`http://localhost:8001/api/appointments/${id}`, {
         interview: interview
       })
       .then(res => console.log("success: ", res))
-      .then(setState({ ...state, appointments }));
+      .then(setState({ ...state, appointments }))
+      .then(() => resetSpots())
     // .catch(err => console.log("ERROR CATCHED: ", err))
   }
 

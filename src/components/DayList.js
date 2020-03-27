@@ -4,6 +4,7 @@ import useApplicationData from "./../hooks/useApplicationData"
 
 
 export default function DayList(props) {
+  console.log("RENDERING DAYLIST")
   const arr = props.days.map(data => {
     return (
       <DayListItem

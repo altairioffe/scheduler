@@ -2,8 +2,6 @@ import React from "react";
 
 import { render, cleanup, fireEvent, prettyDOM, waitForElement } from "@testing-library/react";
 import { getByText, getAllByTestId } from "@testing-library/react";
-
-
 import Application from "components/Application";
 
 afterEach(cleanup);
@@ -37,6 +35,5 @@ describe("Appointment", () => {
   
     console.log(prettyDOM(appointment));
   });
-
 
 });

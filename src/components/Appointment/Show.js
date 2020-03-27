@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function Show (props) {
-  console.log('show.js', props)
+ // console.log('show.js', props)
 
   const onDelete = function() {
     props.onDelete()
@@ -9,8 +9,6 @@ export default function Show (props) {
   const onEdit = function() {
     props.onEdit()
   }
-
-
 
   return ( 
     <main className="appointment__card appointment__card--show">

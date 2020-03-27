@@ -42,7 +42,7 @@ export default function Appointment(props) {
 
   function confirmDelete(id) {
     transition(DELETING)
-    deleteHandler(id)
+     deleteHandler(id)
     .then(() => transition(EMPTY))
     .catch(error => transition(ERROR_DELETE, true));
 
@@ -67,7 +67,7 @@ export default function Appointment(props) {
           student={props.interview.student}
           interviewer={props.interview.interviewer}
           onDelete={() => {
-            console.log("OnDelete Props: ", props.id);
+           // console.log("OnDelete Props: ", props.id);
             transition(CONFIRM);
           }}
           onEdit={() => transition(EDIT)}
